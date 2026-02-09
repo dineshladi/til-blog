@@ -1,0 +1,253 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-color: #0d1117;
+  --text-color: #c9d1d9;
+  --link-color: #58a6ff;
+  --border-color: #30363d;
+  --header-bg: #161b22;
+  --code-bg: #161b22;
+  --tag-bg: #21262d;
+  --tag-hover: #30363d;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header */
+.site-header {
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.site-header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.nav-links a {
+  margin-left: 1.5rem;
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+/* Main content */
+main {
+  min-height: calc(100vh - 200px);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; margin-top: 2rem; }
+h3 { font-size: 1.25rem; margin-top: 1.5rem; }
+
+p {
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Lists */
+ul, ol {
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* Code */
+code {
+  background-color: var(--code-bg);
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: 'SF Mono', Monaco, Consolas, monospace;
+  font-size: 0.9em;
+}
+
+pre {
+  background-color: var(--code-bg);
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}
+
+/* TIL Post */
+.til-post header {
+  margin-bottom: 2rem;
+}
+
+.til-post h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.meta {
+  color: #8b949e;
+  font-size: 0.9rem;
+}
+
+.tags {
+  margin-left: 1rem;
+}
+
+.tag {
+  display: inline-block;
+  background-color: var(--tag-bg);
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  margin-right: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--link-color);
+}
+
+.tag:hover {
+  background-color: var(--tag-hover);
+  text-decoration: none;
+}
+
+/* Content styling */
+.content {
+  line-height: 1.8;
+}
+
+.content h2 {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.content blockquote {
+  border-left: 4px solid var(--border-color);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: #8b949e;
+}
+
+.content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.content th,
+.content td {
+  border: 1px solid var(--border-color);
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.content th {
+  background-color: var(--header-bg);
+}
+
+/* TIL List */
+.til-list {
+  list-style: none;
+  padding: 0;
+}
+
+.til-item {
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.5rem 0;
+}
+
+.til-item:last-child {
+  border-bottom: none;
+}
+
+.til-item h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.til-item h2 a {
+  color: var(--text-color);
+}
+
+.til-item h2 a:hover {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.til-item .excerpt {
+  color: #8b949e;
+  margin-bottom: 0.5rem;
+}
+
+/* Tags page */
+.tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 2rem 0;
+}
+
+.tag-large {
+  font-size: 1.1rem;
+  padding: 0.4rem 0.8rem;
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border-color);
+  padding: 2rem 0;
+  margin-top: 3rem;
+  text-align: center;
+  color: #8b949e;
+  font-size: 0.9rem;
+}
+
+/* Math (KaTeX) */
+.katex {
+  font-size: 1.1em;
+}

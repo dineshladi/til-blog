@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('til', ({ data }) => !data.draft);
+posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// Group by year
+const postsByYear = new Map<number, typeof posts>();
+posts.forEach(post => {
+  const year = post.data.date.getFullYear();
+  if (!postsByYear.has(year)) {
+    postsByYear.set(year, []);
+  }
+  postsByYear.get(year)!.push(post);
+});
+
+const years = Array.from(postsByYear.keys()).sort((a, b) => b - a);
+---
+
+<Layout title={`All TILs (${posts.length})`}>
+  <h1>All TILs</h1>
+  <p class="subtitle">{posts.length} things learned and counting</p>
+
+  {years.map(year => (
+    <section class="year-section">
+      <h2>{year}</h2>
+      <ul class="til-list">
+        {postsByYear.get(year)!.map(post => (
+          <li class="til-item">
+            <h3>
+              <a href={`/til-blog/${post.slug}`}>{post.data.title}</a>
+            </h3>
+            <div class="meta">
+              <time datetime={post.data.date.toISOString()}>
+                {post.data.date.toLocaleDateString('en-US', { 
+                  month: 'short', 
+                  day: 'numeric' 
+                })}
+              </time>
+              {post.data.tags.length > 0 && (
+                <span class="tags">
+                  {post.data.tags.map((tag: string) => (
+                    <a href={`/til-blog/tags/${tag}`} class="tag">#{tag}</a>
+                  ))}
+                </span>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</Layout>
+
+<style>
+  h1 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    color: #8b949e;
+    margin-bottom: 2rem;
+  }
+  
+  .year-section {
+    margin-bottom: 3rem;
+  }
+  
+  .year-section h2 {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    color: #8b949e;
+    font-size: 1.5rem;
+  }
+  
+  .til-item h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    margin-top: 0;
+  }
+  
+  .til-item h3 a {
+    color: var(--text-color);
+  }
+  
+  .til-item h3 a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+  }
+  
+  .til-item {
+    padding: 0.75rem 0;
+  }
+</style>

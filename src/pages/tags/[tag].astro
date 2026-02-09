@@ -1,0 +1,71 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('til');
+  const tags = [...new Set(posts.flatMap(post => post.data.tags))];
+  
+  return tags.map(tag => ({
+    params: { tag },
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props;
+
+const allPosts = await getCollection('til', ({ data }) => !data.draft);
+const posts = allPosts
+  .filter(post => post.data.tags.includes(tag))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Layout title={`TILs tagged "${tag}"`}>
+  <div class="tag-header">
+    <h1>#{tag}</h1>
+    <p>{posts.length} TIL{posts.length !== 1 ? 's' : ''}</p>
+  </div>
+
+  <ul class="til-list">
+    {posts.map(post => (
+      <li class="til-item">
+        <h2>
+          <a href={`/til-blog/${post.slug}`}>{post.data.title}</a>
+        </h2>
+        <div class="meta">
+          <time datetime={post.data.date.toISOString()}>
+            {post.data.date.toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          </time>
+        </div>
+        <p class="excerpt">{post.body.slice(0, 200)}...</p>
+      </li>
+    ))}
+  </ul>
+
+  <p class="back">
+    <a href="/til-blog/tags">← All tags</a>
+  </p>
+</Layout>
+
+<style>
+  .tag-header {
+    margin-bottom: 2rem;
+  }
+  
+  .tag-header h1 {
+    color: var(--link-color);
+    margin-bottom: 0.5rem;
+  }
+  
+  .tag-header p {
+    color: #8b949e;
+  }
+  
+  .back {
+    margin-top: 2rem;
+  }
+</style>
